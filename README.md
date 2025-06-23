@@ -261,7 +261,14 @@ happy-frog/
 │   ├── encoder.py             # CircuitPython code generator
 │   └── __init__.py
 ├── devices/                   # Device-specific templates
-│   └── xiao_rp2040.py        # Xiao RP2040 specific code
+│   └── device_manager.py      # manages device selection
+│   └── esp32.py               # esp32 specific code
+│   └── xiao_rp2040.py         # Xiao RP2040 specific code
+│   └── evilcrow_cable.py      # Crow Cable specific code
+│   └── raspberry_pi_pico.py   # RPI pico specific code
+│   └── teensy_4.py            # teensy specific code
+│   └── xiao_rp2040.py         # Xiao RP2040 specific code
+│   └── digispark.py           # digispark specific code
 ├── payloads/                  # Example Happy Frog Scripts
 ├── tests/                     # Unit tests
 ├── docs/                      # Documentation
