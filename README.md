@@ -182,7 +182,7 @@ ENTER
 
 ##  Installation & Setup
 
-Grab a Xiao RP2040 or any of the other microcontrollers listed in our device support. Install CircuitPython. Clone this repo. Run the scripts. Don't overthink it.
+Grab a Xiao RP2040 or any of the other microcontrollers listed in our device support. Install CircuitPython. Clone this repo. Write your payload. Run the scripts. Don't overthink it.
 
 ```bash
 git clone https://github.com/ZeroDumb/happy-frog.git
