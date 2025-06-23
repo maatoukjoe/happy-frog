@@ -4,16 +4,16 @@
 
 Happy Frog is an open-source educational framework that demonstrates HID (Human Interface Device) emulation techniques using microcontrollers. It provides a simple scripting language similar to Ducky Script but with our own naming conventions, to avoid any legal concerns, as well as **Happy Frog Exclusive features** that go beyond traditional HID emulation tools.
 
-## ⚠️ Important Disclaimer
+## Important Disclaimer
 
 **This project is for EDUCATIONAL PURPOSES ONLY!**
 
-- ✅ **Legal Uses**: Educational cybersecurity labs, authorized penetration testing, red teaming with explicit permission, security research in controlled environments
-- ❌ **Prohibited Uses**: Unauthorized access to systems, malicious attacks, testing without permission, any illegal activities
+-  **Legal Uses**: Educational cybersecurity labs, authorized penetration testing, red teaming with explicit permission, security research in controlled environments
+-  **Prohibited Uses**: Unauthorized access to systems, malicious attacks, testing without permission, any illegal activities
 
 By using this tool, you agree to use it only for legal and ethical purposes.
 
-## 🎯 Project Goals
+##  Project Goals
 
 Happy Frog aims to:
 
@@ -24,7 +24,7 @@ Happy Frog aims to:
 5. **Avoid** over complicated and proprietary binary code
 6. **Enhance** traditional HID emulation with advanced features for education
 
-## 🚀 Features
+##  Features
 
 ### Happy Frog Script Language
 - **Simple Syntax**: Easy-to-learn scripting language
@@ -78,7 +78,7 @@ Happy Frog is **100% compatible** with Ducky Script and includes a built-in conv
 ### Quick Links
 
 
-## 📦 Installation
+##  Installation
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -97,7 +97,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## 🛠️ Usage
+##  Usage
 
 ### Command Line Interface
 
@@ -209,7 +209,7 @@ STRING cmd
 ENTER
 ```
 
-## 🎓 Educational Content
+##  Educational Content
 
 ### Learning Objectives
 - Understand how automated input attacks work
@@ -233,7 +233,7 @@ ENTER
 - **Random Delays**: Understanding human behavior patterns
 - **Conditional Logic**: Learning programming concepts
 
-## 🔧 Hardware Setup
+##  Hardware Setup
 
 ### Seeed Xiao RP2040
 1. Install CircuitPython on your Xiao RP2040
@@ -252,7 +252,7 @@ ENTER
 - Document all testing activities
 - Use safe mode for educational purposes
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 happy-frog/
@@ -270,7 +270,7 @@ happy-frog/
 └── requirements.txt           # Python dependencies
 ```
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Run all tests
@@ -289,14 +289,14 @@ python main.py convert test_hak5_examples.txt
 python main.py parse test_advanced_features.txt
 ```
 
-## 📚 Documentation
+##  Documentation
 
 - [Usage Guide](docs/usage.md) - Detailed usage instructions
 - [Microcontroller Setup](docs/microcontrollers.md) - Hardware setup guide
 - [Educational Examples](payloads/) - Sample scripts with explanations
 - [Why We Are Different](docs/How_We_Are_Different.md) - What sets Happy Frog appart from that other script
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
@@ -312,18 +312,18 @@ pre-commit install
 python -m pytest tests/
 ```
 
-## 📄 License
+##  License
 
 This project is licensed under the GNU GPL3 License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Inspired by educational cybersecurity concepts
 - Built with CircuitPython and Adafruit libraries
 - Designed for learning and ethical use only
 - Enhanced with advanced features for comprehensive education
 
-## ⚖️ Legal Notice
+##  Legal Notice
 
 This project is designed for educational purposes only. Users are responsible for ensuring they have proper authorization before testing any systems. The authors are not responsible for any misuse of this software.
 
