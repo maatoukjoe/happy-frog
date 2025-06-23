@@ -44,13 +44,14 @@ Easy to understand what the code does
 Community contributions possible
 
 ### Technical Comparison
-Aspect	USB Rubber Ducky	Happy Frog
-Output Format	.bin (binary)	.py/.ino (source code)
-Compilation	Proprietary tool	Standard tools
-Modifiability	No (binary)	Yes (source)
-Learning Value	Low (black box)	High (transparent)
-Hardware	Proprietary	Standard
-Firmware	Closed-source	Open-source
+| Aspect	USB      | Rubber Ducky	      | Happy Frog            |
+|------------------|--------------------|-----------------------|
+| Output Format	   | .bin (binary)	    | .py/.ino (source code)|
+| Compilation	     | Proprietary tool	  | Standard tools        |
+| Modifiability	   | No (binary)	      | Yes (source)          |
+| Learning Value   | Low (black box)	  | High (transparent)    |
+| Hardware	       | Proprietary	      | Standard              |
+| Firmware	       | Closed-source	    | Open-source           |
 
 ## Why This Matters
 
