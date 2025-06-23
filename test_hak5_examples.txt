@@ -1,0 +1,42 @@
+REM Hak5 Ducky Script Examples - Test File
+REM This file contains examples from the Hak5 documentation
+REM https://docs.hak5.org/hak5-usb-rubber-ducky/ducky-script-basics/hello-world
+
+REM Basic Hello World Example
+DELAY 3000
+STRING Hello, World!
+ENTER
+
+REM Windows Example
+DELAY 3000
+REM Open the Run dialog
+WINDOWS r
+DELAY 1000
+REM Open powershell with our message
+STRING powershell "echo 'Hello, World!'; pause"
+ENTER
+
+REM macOS Example
+DELAY 3000
+REM Open Spotlight Search
+COMMAND SPACE
+REM Open the text editor
+STRING TextEdit
+ENTER
+DELAY 2000
+COMMAND n
+DELAY 2000
+STRING echo Hello, World!
+
+REM Test various Ducky commands
+DELAY 1000
+UPARROW
+DOWNARROW
+LEFTARROW
+RIGHTARROW
+PAGEUP
+PAGEDOWN
+ESC
+CONTROL
+PAUSE
+BREAK 
