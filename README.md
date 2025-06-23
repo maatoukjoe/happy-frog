@@ -2,7 +2,7 @@
 
 **Educational HID Emulation Framework for Cybersecurity Learning**
 
-Happy Frog is an open-source educational framework that demonstrates HID (Human Interface Device) emulation techniques using microcontrollers. It provides a simple scripting language similar to Ducky Script but with our own naming conventions, to avoid any legal concerns, as well as **Happy Frog Exclusive features** that go beyond traditional HID emulation tools.
+Happy Frog is an open-source educational framework that demonstrates HID (Human Interface Device) emulation techniques using microcontrollers. It provides a simple scripting language similar to Ducky Script but with our own naming conventions, advanced options, all code is open, no bin, and more, as well as **Happy Frog Exclusive features** that go beyond traditional HID emulation tools.
 
 ## Important Disclaimer
 
