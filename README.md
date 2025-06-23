@@ -1,38 +1,65 @@
 # 🐸 Happy Frog
 
-**Educational HID Emulation Framework for Cybersecurity Learning**
+**"One Small Step for HID. One Giant Leap for Keyboard Chaos."**
 
-Happy Frog is an open-source educational framework that demonstrates HID (Human Interface Device) emulation techniques using microcontrollers. It provides a simple scripting language similar to Ducky Script but with our own naming conventions, advanced options, all code is open, no bin, and more, as well as **Happy Frog Exclusive features** that go beyond traditional HID emulation tools.
+Welcome to **Happy Frog** — your new favorite educational mayhem engine disguised as an HID emulation framework. You've heard of rubber duckies. You've seen people pretend to be keyboards. But have you ever watched a frog automate your operating system and ask *"Why are you like this?"* while doing it?
 
-## Important Disclaimer
+Didn't think so.
 
-**This project is for EDUCATIONAL PURPOSES ONLY!**
+##  What Even Is This?
 
--  **Legal Uses**: Educational cybersecurity labs, authorized penetration testing, red teaming with explicit permission, security research in controlled environments
--  **Prohibited Uses**: Unauthorized access to systems, malicious attacks, testing without permission, any illegal activities
+This is not a toy. Unless you play in cybersecurity labs for fun (we do). Happy Frog is your customizable, open-source playground for learning how **automated input attacks** work — ethically, responsibly, and with just enough flair to make your sysadmin sweat. It's ducky script, reimagined. Simpler, safer, more sarcastic.
 
-By using this tool, you agree to use it only for legal and ethical purposes.
+Oh, and **no binaries**. You want sketchy obfuscated payloads? Go look somewhere else. Here, everything's open, readable, and educational. Like a frog in a chemistry lab with safety goggles and way too much caffeine.
 
-##  Project Goals
+##  The Obligatory Legal Glare
 
-Happy Frog aims to:
+This project is for **educational purposes only**. You may:
 
-1. **Educate** about HID emulation and cybersecurity concepts
-2. **Demonstrate** how automated input attacks work
-3. **Provide** a safe learning environment for security testing
-4. **Showcase** microcontroller programming and code generation
-5. **Avoid** over complicated and proprietary binary code
-6. **Enhance** traditional HID emulation with advanced features for education
+👉 Train  
+👉 Simulate (in approved labs)  
+👉 Learn responsibly  
+👉 Get smarter
 
-##  Features
+You may not:
 
-### Happy Frog Script Language
-- **Simple Syntax**: Easy-to-learn scripting language
-- **Cross-Platform**: Works on Windows, macOS, and Linux
-- **Educational**: Rich comments and documentation
-- **Safe**: Built-in validation and warnings
-- **Advanced**: Conditional logic, loops, and human-like behavior
-- **Use Your "Other" Strings**: Easy conversion from your other HID txt to Happy Frog 
+🚫 Use this to be a jerk  
+🚫 Hack without permission  
+🚫 Ruin someone's day  
+🚫 Blame us when you ignore this section
+
+> You are responsible for your usage. Like a grown-up. Or at least a well-supervised minor.
+
+##  Why Happy Frog Exists
+
+- Because people learn better with humor and hands-on tools  
+- Because HID emulation is cooler than memorizing ports  
+- Because scripting should feel like frog jumps, not wading through molasses  
+- Because automation shouldn't be a proprietary black box  
+- Because you deserve tools that explain *why*, not just *what*
+
+##  The Frog Language
+
+Happy Frog Script™ (trademark pending, not really) is:
+
+- Familiar if you've used DuckyScript  
+- Friendlier because we believe in helpful errors  
+- Fancier with loops, logic, and safe mode
+- Actually works (unlike some other frameworks we won't name)
+
+It's compatible, convertible, and extensively commented. Your other scripts won't cry during migration.
+
+##  Features & Commands
+
+You get all the usual suspects — `STRING`, `ENTER`, `CTRL`, `MOD`, `DELAY`, `REPEAT` — but also:
+
+- `IF`, `ELSE`, `WHILE` for conditional logic
+- `LOG` for educational commentary  
+- `VALIDATE` for environment checks  
+- `SAFE_MODE` so you don't nuke your real OS  
+- `RANDOM_DELAY` for that oh-so-human typing slop
+
+It's everything you wanted in duckyland, except now the duck is a frog with a PhD in chaos theory.
 
 ### Supported Commands
 
@@ -60,84 +87,28 @@ Happy Frog aims to:
 #### Documentation
 - **Comments**: `#` and `REM` for documentation
 
-### Ducky Script Compatibility
-Happy Frog is **100% compatible** with Ducky Script and includes a built-in converter: (because change is hard)
-- **Automatic Conversion**: Convert any Ducky Script to Happy Frog Script
-- **Command Mapping**: `WINDOWS`/`GUI`/`COMMAND` → `MOD`
-- **Educational Warnings**: Built-in safety checks and warnings
-- **Validation**: Automatic detection of potentially dangerous commands
+##  Sample Sorcery
 
-### Key Advantages Over Traditional Tools
-- **Free and Open Source**: Anyone can use, modify, or contribute
-- **Educational Focus**: Rich documentation and learning resources
-- **Advanced Features**: Conditional logic, loops, and human-like behavior
-- **Safety First**: Built-in validation, safe mode, and ethical guidelines
-- **Cross-Platform**: Works on Windows, macOS, and Linux
-- **Extensible**: Easy to add new commands and features
+Here's a taste of what your script might look like if your frog spent a semester at Hogwarts:
 
-### Quick Links
-
-
-##  Installation
-
-### Prerequisites
-- Python 3.8 or higher
-- Seeed Xiao RP2040 (or compatible CircuitPython device)
-
-### Setup
-```bash
-# Clone the repository
-git clone https://github.com/ZeroDumb/happy-frog.git
-cd happy-frog
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Install in development mode
-pip install -e .
+```txt
+# This is Happy Frog casting Hello World
+SAFE_MODE ON
+DEFAULT_DELAY 500
+LOG Preparing automation spell...
+STRING Hello, World!
+ENTER
+IF system_windows
+  STRING Notepad time
+  MOD r
+  STRING notepad
+  ENTER
+ENDIF
 ```
 
-##  Usage
+Yes, it works. Yes, it's hilarious. Yes, it's educational.
 
-### Command Line Interface
-
-```bash
-# Parse a Happy Frog Script file
-python main.py parse payloads/demo_automation.txt
-
-# Encode to CircuitPython
-python main.py encode payloads/demo_automation.txt -o output.py
-
-# Convert Ducky Script to Happy Frog Script
-python main.py convert ducky_script.txt
-
-# Validate a script
-python main.py validate payloads/demo_automation.txt
-
-# Verbose output
-python main.py encode payloads/demo_automation.txt -o output.py --verbose
-```
-
-### Python API
-
-```python
-from happy_frog_parser import HappyFrogParser, CircuitPythonEncoder
-from ducky_converter import DuckyConverter
-
-# Parse a Happy Frog Script
-parser = HappyFrogParser()
-script = parser.parse_file("payloads/demo_automation.txt")
-
-# Encode to CircuitPython
-encoder = CircuitPythonEncoder()
-code = encoder.encode(script, "output.py")
-
-# Convert Ducky Script
-converter = DuckyConverter()
-converted_content, warnings = converter.convert_file("ducky_script.txt")
-```
-
-### Example Happy Frog Scripts
+### More Examples
 
 #### Basic Example
 ```txt
@@ -209,123 +180,112 @@ STRING cmd
 ENTER
 ```
 
-##  Educational Content
+##  Installation & Setup
 
-### Learning Objectives
-- Understand how automated input attacks work
-- Learn to recognize and defend against HID attacks
-- Practice ethical security testing techniques
-- Develop skills in microcontroller programming
-- Master advanced automation concepts
-
-### Key Concepts Demonstrated
-- **HID Emulation**: How devices can emulate human input
-- **Script Parsing**: Converting text commands to executable code
-- **Code Generation**: Creating microcontroller-compatible code
-- **Security Awareness**: Understanding attack vectors and defenses
-- **Conditional Logic**: Advanced automation with decision-making
-- **Human-like Behavior**: Realistic timing and interaction patterns
-
-### Advanced Features for Education
-- **Safe Mode**: Controlled execution environment
-- **Logging**: Real-time feedback and debugging
-- **Validation**: Environment checks before execution
-- **Random Delays**: Understanding human behavior patterns
-- **Conditional Logic**: Learning programming concepts
-
-##  Hardware Setup
-
-### Seeed Xiao RP2040
-1. Install CircuitPython on your Xiao RP2040
-2. Install required libraries:
-   ```bash
-   adafruit_hid
-   ```
-3. Copy generated CircuitPython code to your device
-4. Test in a controlled environment
-
-### Safety Best Practices
-- Always test in virtual machines first
-- Use dedicated test systems
-- Never test on production systems
-- Keep physical access secure
-- Document all testing activities
-- Use safe mode for educational purposes
-
-##  Project Structure
-
-```
-happy-frog/
-├── happy_frog_parser/          # Core parsing and encoding
-│   ├── parser.py              # Script parser
-│   ├── encoder.py             # CircuitPython code generator
-│   └── __init__.py
-├── devices/                   # Device-specific templates
-│   └── xiao_rp2040.py        # Xiao RP2040 specific code
-├── payloads/                  # Example Happy Frog Scripts
-├── tests/                     # Unit tests
-├── docs/                      # Documentation
-├── ducky_converter.py         # Ducky Script converter
-├── main.py                    # CLI interface
-└── requirements.txt           # Python dependencies
-```
-
-##  Testing
+Grab a Xiao RP2040 or any of the other microcontrollers listed in our device support. Install CircuitPython. Clone this repo. Run the scripts. Don't overthink it.
 
 ```bash
-# Run all tests
-python -m pytest tests/ -v
-
-# Run specific test file
-python -m pytest tests/test_parser.py -v
-
-# Run with coverage
-python -m pytest tests/ --cov=happy_frog_parser
-
-# Test Ducky Script conversion
-python main.py convert test_hak5_examples.txt
-
-# Test advanced features
-python main.py parse test_advanced_features.txt
+git clone https://github.com/ZeroDumb/happy-frog.git
+cd happy-frog
+pip install -r requirements.txt
 ```
+
+##  Usage
+
+### Command Line Interface
+
+The CLI is actually useful (shocking, we know):
+
+```bash
+# Parse a Happy Frog Script file (see what the frog is thinking)
+python main.py parse payloads/hello_world.txt
+
+# Encode to CircuitPython (turn thoughts into reality)
+python main.py encode payloads/demo_automation.txt -o compiled/output.py
+
+# Convert Ducky Script to Happy Frog Script (migration magic)
+python main.py convert ducky_script.txt
+
+# Validate a script (make sure it's not going to break everything)
+python main.py validate payloads/demo_automation.txt
+
+# Verbose output (for when you want to see everything)
+python main.py encode payloads/demo_automation.txt -o compiled/output.py --verbose
+
+# Select specific device (because not all frogs are the same)
+python main.py encode payloads/demo_automation.txt --device xiao_rp2040 -o compiled/output.py
+```
+
+### What Each Command Actually Does
+
+- **`parse`**: Reads your script and tells you what it's going to do (without actually doing it)
+- **`encode`**: Converts your script into actual CircuitPython code that runs on hardware
+- **`validate`**: Checks if your script is safe and won't break things (mostly)
+- **`convert`**: Transforms old Ducky Script into modern Happy Frog Script
+
+##  Device Support
+
+Happy Frog supports multiple microcontrollers because we're not picky about hardware:
+
+### Supported Devices
+- **Seeed Xiao RP2040** - Primary development platform (the one we actually test on)
+- **Raspberry Pi Pico** - Popular alternative (because everyone has one)
+- **Arduino Leonardo** - Classic choice (for the traditionalists)
+- **Teensy 4.0** - High-performance option (for the speed demons)
+- **DigiSpark** - Compact and affordable (for the budget-conscious)
+- **ESP32** - WiFi-enabled automation (for the wireless wizards)
+- **EvilCrow-Cable** - Specialized hardware (for the advanced users)
+
+Each device has its own encoder that generates optimized code. Because one size doesn't fit all in the microcontroller world.
 
 ##  Documentation
 
-- [Usage Guide](docs/usage.md) - Detailed usage instructions
-- [Microcontroller Setup](docs/microcontrollers.md) - Hardware setup guide
-- [Educational Examples](payloads/) - Sample scripts with explanations
-- [Why We Are Different](docs/How_We_Are_Different.md) - What sets Happy Frog appart from that other script
+- [Hello Happy Frog](docs/HELLO_HAPPY_FROG.md) - Beginner-friendly guide (actually beginner-friendly)
+- [Usage Guide](docs/usage.md) - Detailed usage instructions (with examples that work)
+- [Microcontroller Setup](docs/microcontrollers.md) - Hardware setup guide (because hardware is hard)
+- [Educational Examples](payloads/) - Sample scripts with explanations (that actually run)
+- [How We Are Different](docs/How_We_Are_Different.md) - What sets Happy Frog apart (besides the frog theme)
 
-##  Contributing
+##  Safety Rules
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+- Test in a **virtual machine** or burn your own device (we're not kidding)
+- Backup your stuff or... burn your own device (seriously, backup your stuff)
+- Don't run unknown scripts like a rookie... or burn your own device (see the pattern?)
+- Leave the frog alone when it says "No" (it knows things)
+- Remember, don't be dumb (this is the most important rule)
 
-### Development Setup
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
+##  Who Is This For?
 
-# Run pre-commit hooks
-pre-commit install
+- **Tinkerers** - People who like to break things (responsibly)
+- **Educators** - People who teach others to break things (responsibly)
+- **Students** - People learning to break things (responsibly)
+- **Ethical hackers** - People who break things for good reasons
+- **Anyone who wants to *understand* input emulation** - Not just run sketchy scripts from 2017
 
-# Run tests before committing
-python -m pytest tests/
-```
+##  What's Actually Working
 
-##  License
+- ✅ Script parsing and validation
+- ✅ CircuitPython code generation
+- ✅ Multi-device support
+- ✅ Ducky Script conversion
+- ✅ CLI with helpful error messages
+- ✅ Educational examples that actually work
+- ✅ Safety features and warnings
+- ✅ Comprehensive testing (because we're professionals)
 
-This project is licensed under the GNU GPL3 License - see the [LICENSE](LICENSE) file for details.
+##  Known Issues
 
-##  Acknowledgments
+- Sometimes the frog gets confused (we're working on it)
+- Hardware compatibility varies (because hardware is weird)
+- Documentation might be sarcastic (this is a feature, not a bug)
 
-- Inspired by educational cybersecurity concepts
-- Built with CircuitPython and Adafruit libraries
-- Designed for learning and ethical use only
-- Enhanced with advanced features for comprehensive education
+## ☕ Support the Project
 
-##  Legal Notice
-
-This project is designed for educational purposes only. Users are responsible for ensuring they have proper authorization before testing any systems. The authors are not responsible for any misuse of this software.
+Want to support future chaos?  
+- [X - @zerodumb_dev](https://x.com/zerodumb_dev)  
+- [Blog](https://zerodumb.dev)  
+- [Store - Coming Soon](https://store.zerodumb.dev)
+- [Buy Me Coffee](https://buymeacoffee.com/iamnotaskid) Please, seriously, lol
 
 ---
 
@@ -333,9 +293,7 @@ This project is designed for educational purposes only. Users are responsible fo
 
 **Happy Frog: Where Education Meets Innovation in HID Emulation**
 
-## Other Things
-- [Blog](https://zerodumb.dev)
-- [X - @zerodumb_dev](https://x.com/zerodumb_dev)
-- [Store - Coming Soon](https://store.zerodumb.dev)
-- [Buy Me Coffee](https://buymeacoffee.com/iamnotaskid)
+*"One Small Step for HID. One Giant Leap for Keyboard Chaos."*
 
+**Stay Loud**
+-zero
