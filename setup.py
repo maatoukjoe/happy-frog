@@ -21,7 +21,7 @@ setup(
     name="happy-frog",
     version="0.1.0",
     author="ZeroDumb",
-    author_email="zero@zerodumb.dev",  # Add contact email if desired
+    author_email="zero@zerodumb.dev",
     description="Educational HID emulation framework for cybersecurity learning",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
