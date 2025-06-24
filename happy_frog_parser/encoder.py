@@ -141,16 +141,36 @@ class CircuitPythonEncoder:
         """Generate the header section of the CircuitPython code."""
         lines = []
         
-        # Add template header
-        lines.extend(self.templates['header'].split('\n'))
+        # Add template header (conditional based on safe mode)
+        if self.safe_mode:
+            lines.extend(self.templates['header'].split('\n'))
+        else:
+            # Minimal header for production code
+            lines.extend([
+                '"""',
+                'Happy Frog - Generated CircuitPython Code',
+                '"""',
+                '',
+                'import time',
+                'import usb_hid',
+                'from adafruit_hid.keyboard import Keyboard',
+                'from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS',
+                'from adafruit_hid.keycode import Keycode',
+                '',
+                '# Initialize HID devices',
+                'keyboard = Keyboard(usb_hid.devices)',
+                'keyboard_layout = KeyboardLayoutUS(keyboard)',
+                ''
+            ])
         
-        # Add script metadata as comments
-        lines.append("")
-        lines.append("# Script Information:")
-        lines.append(f"# Source: {script.metadata.get('source', 'Unknown')}")
-        lines.append(f"# Total Commands: {script.metadata.get('total_commands', 0)}")
-        lines.append(f"# Total Lines: {script.metadata.get('total_lines', 0)}")
-        lines.append("")
+        # Add script metadata as comments (only in safe mode)
+        if self.safe_mode:
+            lines.append("")
+            lines.append("# Script Information:")
+            lines.append(f"# Source: {script.metadata.get('source', 'Unknown')}")
+            lines.append(f"# Total Commands: {script.metadata.get('total_commands', 0)}")
+            lines.append(f"# Total Lines: {script.metadata.get('total_lines', 0)}")
+            lines.append("")
         
         return lines
     
@@ -158,9 +178,11 @@ class CircuitPythonEncoder:
         """Generate the main execution code from script commands."""
         lines = []
         
-        lines.append("# Main execution loop")
+        if self.safe_mode:
+            lines.append("# Main execution loop")
         lines.append("def main():")
-        lines.append("    # Wait for system to recognize the device")
+        if self.safe_mode:
+            lines.append("    # Wait for system to recognize the device")
         lines.append("    time.sleep(2)")
         lines.append("")
         
@@ -169,7 +191,8 @@ class CircuitPythonEncoder:
             lines.extend(self._encode_command(command, i + 1))
         
         lines.append("")
-        lines.append("# Run the main function")
+        if self.safe_mode:
+            lines.append("# Run the main function")
         lines.append("if __name__ == '__main__':")
         lines.append("    main()")
         lines.append("")
@@ -180,9 +203,10 @@ class CircuitPythonEncoder:
         """Encode a single command into CircuitPython code."""
         lines = []
         
-        # Add comment with original command
-        comment = f"    # Command {command_index}: {command.raw_text}"
-        lines.append(comment)
+        # Add comment with original command (only in safe mode)
+        if self.safe_mode:
+            comment = f"    # Command {command_index}: {command.raw_text}"
+            lines.append(comment)
         
         # Encode based on command type
         if command.command_type == CommandType.DELAY:
@@ -215,13 +239,16 @@ class CircuitPythonEncoder:
             lines.extend(self._encode_validate(command))
         elif command.command_type == CommandType.SAFE_MODE:
             lines.extend(self._encode_safe_mode(command))
+        elif command.command_type == CommandType.ATTACKMODE:
+            lines.extend(self._encode_attackmode(command))
         elif command.command_type in self.key_codes:
             lines.extend(self._encode_key_press(command))
         elif command.command_type in [CommandType.COMMENT, CommandType.REM]:
             lines.extend(self._encode_comment(command))
         else:
-            # Unknown command - add warning comment
-            lines.append(f"    # WARNING: Unknown command '{command.command_type}'")
+            # Unknown command - add warning comment (only in safe mode)
+            if self.safe_mode:
+                lines.append(f"    # WARNING: Unknown command '{command.command_type}'")
             lines.append("    pass")
         
         lines.append("")  # Add blank line for readability
@@ -233,9 +260,15 @@ class CircuitPythonEncoder:
             delay_ms = int(command.parameters[0])
             if delay_ms < 0:
                 raise EncoderError("Delay value must be non-negative")
-            return [
-                f"    time.sleep({delay_ms / 1000.0})  # Delay for {delay_ms}ms"
-            ]
+            
+            if self.safe_mode:
+                return [
+                    f"    time.sleep({delay_ms / 1000.0})  # Delay for {delay_ms}ms"
+                ]
+            else:
+                return [
+                    f"    time.sleep({delay_ms / 1000.0})"
+                ]
         except (ValueError, IndexError):
             raise EncoderError(f"Invalid delay value '{command.parameters[0] if command.parameters else 'None'}' in command: {command.raw_text}")
     
@@ -248,18 +281,28 @@ class CircuitPythonEncoder:
         # Escape quotes and special characters
         escaped_text = text.replace('\\', '\\\\').replace('"', '\\"')
         
-        return [
-            f'    keyboard_layout.write("{escaped_text}")  # Type: {text}'
-        ]
+        if self.safe_mode:
+            return [
+                f'    keyboard_layout.write("{escaped_text}")  # Type: {text}'
+            ]
+        else:
+            return [
+                f'    keyboard_layout.write("{escaped_text}")'
+            ]
     
     def _encode_pause(self, command: HappyFrogCommand) -> List[str]:
         """Encode a PAUSE command - wait for user input."""
-        return [
-            "    # PAUSE: Waiting for user input (press any key to continue)",
-            "    # Note: In CircuitPython, we'll use a long delay as a simple pause",
-            "    # For more sophisticated pause functionality, consider using button input",
-            "    time.sleep(5)  # Pause for 5 seconds (Ducky Script PAUSE equivalent)"
-        ]
+        if self.safe_mode:
+            return [
+                "    # PAUSE: Waiting for user input (press any key to continue)",
+                "    # Note: In CircuitPython, we'll use a long delay as a simple pause",
+                "    # For more sophisticated pause functionality, consider using button input",
+                "    time.sleep(5)  # Pause for 5 seconds (Ducky Script PAUSE equivalent)"
+            ]
+        else:
+            return [
+                "    time.sleep(5)"
+            ]
     
     def _encode_modifier_combo(self, command: HappyFrogCommand) -> List[str]:
         """Encode a MODIFIER_COMBO command (e.g., MOD r, CTRL ALT DEL)."""
@@ -274,23 +317,35 @@ class CircuitPythonEncoder:
                 # It's a modifier key
                 key_code = self.key_codes.get(CommandType(param.upper()))
                 if key_code:
-                    lines.append(f"    keyboard.press({key_code})  # Press {param}")
+                    if self.safe_mode:
+                        lines.append(f"    keyboard.press({key_code})  # Press {param}")
+                    else:
+                        lines.append(f"    keyboard.press({key_code})")
             else:
                 # It's a regular key - map it to the appropriate keycode
                 key_code = self._map_key_to_keycode(param)
                 if key_code:
-                    lines.append(f"    keyboard.press({key_code})  # Press {param}")
+                    if self.safe_mode:
+                        lines.append(f"    keyboard.press({key_code})  # Press {param}")
+                    else:
+                        lines.append(f"    keyboard.press({key_code})")
         
         # Release all keys in reverse order
         for param in reversed(command.parameters):
             if param.upper() in ['MOD', 'CTRL', 'SHIFT', 'ALT']:
                 key_code = self.key_codes.get(CommandType(param.upper()))
                 if key_code:
-                    lines.append(f"    keyboard.release({key_code})  # Release {param}")
+                    if self.safe_mode:
+                        lines.append(f"    keyboard.release({key_code})  # Release {param}")
+                    else:
+                        lines.append(f"    keyboard.release({key_code})")
             else:
                 key_code = self._map_key_to_keycode(param)
                 if key_code:
-                    lines.append(f"    keyboard.release({key_code})  # Release {param}")
+                    if self.safe_mode:
+                        lines.append(f"    keyboard.release({key_code})  # Release {param}")
+                    else:
+                        lines.append(f"    keyboard.release({key_code})")
         
         return lines
     
@@ -326,10 +381,16 @@ class CircuitPythonEncoder:
         if not key_code:
             raise EncoderError(f"Unsupported key: {command.command_type}")
         
-        return [
-            f"    keyboard.press({key_code})  # Press {command.command_type.value}",
-            f"    keyboard.release({key_code})  # Release {command.command_type.value}"
-        ]
+        if self.safe_mode:
+            return [
+                f"    keyboard.press({key_code})  # Press {command.command_type.value}",
+                f"    keyboard.release({key_code})  # Release {command.command_type.value}"
+            ]
+        else:
+            return [
+                f"    keyboard.press({key_code})",
+                f"    keyboard.release({key_code})"
+            ]
     
     def _encode_comment(self, command: HappyFrogCommand) -> List[str]:
         """Encode a comment command."""
@@ -340,11 +401,15 @@ class CircuitPythonEncoder:
     
     def _generate_footer(self) -> List[str]:
         """Generate the footer section of the CircuitPython code."""
-        return self.templates['footer'].split('\n')
+        if self.safe_mode:
+            return self.templates['footer'].split('\n')
+        else:
+            return ['"""', 'End of Happy Frog Generated Code', '"""']
     
     def _get_header_template(self) -> str:
         """Get the header template for CircuitPython code."""
-        return '''"""
+        if self.safe_mode:
+            return '''"""
 Happy Frog - Generated CircuitPython Code
 Educational HID Emulation Script
 
@@ -367,6 +432,20 @@ keyboard_layout = KeyboardLayoutUS(keyboard)
 # Educational note: This creates a virtual keyboard that the computer
 # will recognize as a USB HID device. The keyboard can send keystrokes
 # just like a physical keyboard would.'''
+        else:
+            return '''"""
+Happy Frog - Generated CircuitPython Code
+"""
+
+import time
+import usb_hid
+from adafruit_hid.keyboard import Keyboard
+from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
+from adafruit_hid.keycode import Keycode
+
+# Initialize HID devices
+keyboard = Keyboard(usb_hid.devices)
+keyboard_layout = KeyboardLayoutUS(keyboard)'''
     
     def _get_footer_template(self) -> str:
         """Get the footer template for CircuitPython code."""
@@ -599,4 +678,39 @@ For more information, visit: https://github.com/ZeroDumb/happy-frog
         return [
             f"    # SAFE_MODE: {'Enabled' if self.safe_mode else 'Disabled'} safe mode restrictions",
             f"    safe_mode = {str(self.safe_mode).lower()}"
-        ] 
+        ]
+    
+    def _encode_attackmode(self, command: HappyFrogCommand) -> List[str]:
+        """Encode an ATTACKMODE command - BadUSB attack mode configuration."""
+        if not command.parameters:
+            raise EncoderError(f"ATTACKMODE command missing configuration: {command.raw_text}")
+        
+        mode_config = command.parameters[0].upper()
+        
+        # Handle different ATTACKMODE configurations
+        if 'HID' in mode_config:
+            return [
+                f"    # ATTACKMODE: Configured for HID emulation ({mode_config})",
+                f"    # Note: This device is configured as a HID keyboard/mouse",
+                f"    # Configuration: {mode_config}"
+            ]
+        elif 'STORAGE' in mode_config:
+            return [
+                f"    # ATTACKMODE: Configured for storage emulation ({mode_config})",
+                f"    # Note: This device is configured as a storage device",
+                f"    # Configuration: {mode_config}"
+            ]
+        elif mode_config in ['ON', 'OFF']:
+            # Legacy ON/OFF support
+            self.safe_mode = (mode_config == 'ON')
+            return [
+                f"    # ATTACKMODE: {'Enabled' if self.safe_mode else 'Disabled'} attack mode",
+                f"    safe_mode = {str(self.safe_mode).lower()}"
+            ]
+        else:
+            # Generic ATTACKMODE configuration
+            return [
+                f"    # ATTACKMODE: Configured with '{mode_config}'",
+                f"    # Note: This is a BadUSB attack mode configuration",
+                f"    # Configuration: {mode_config}"
+            ] 

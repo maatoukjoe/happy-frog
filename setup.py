@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Happy Frog - Educational HID Emulation Framework
-Setup script for package installation
+Setup script for production package installation
 """
 
 from setuptools import setup, find_packages
@@ -12,51 +12,59 @@ def read_readme():
     with open("README.md", "r", encoding="utf-8") as fh:
         return fh.read()
 
-# Read requirements
-def read_requirements():
-    with open("requirements.txt", "r", encoding="utf-8") as fh:
-        return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
-
 setup(
     name="happy-frog",
-    version="0.1.0",
+    version="0.1.6",
     author="ZeroDumb",
-    author_email="zero@zerodumb.dev",  # Add contact email if desired
+    author_email="zero@zerodumb.dev",
     description="Educational HID emulation framework for cybersecurity learning",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/ZeroDumb/happy-frog",
     packages=find_packages(),
+    py_modules=["main", "ducky_converter"],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Education",
         "Intended Audience :: Information Technology",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Topic :: Education",
         "Topic :: Security",
         "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: System :: Hardware",
+        "Topic :: System :: Emulators",
     ],
-    python_requires=">=3.8",
-    install_requires=read_requirements(),
+    python_requires=">=3.7",
+    install_requires=[
+        "click>=8.0.0",
+        "colorama>=0.4.4",
+    ],
     entry_points={
         "console_scripts": [
-            "happy-frog=cli.main:main",
+            "happy-frog=main:main",
         ],
     },
     include_package_data=True,
     package_data={
-        "": ["*.txt", "*.md"],
+        "happy_frog_parser": ["*.py"],
+        "ducky_parser": ["*.py"],
+        "devices": ["*.py"],
+        "payloads": ["*.txt"],
     },
-    keywords="cybersecurity, education, hid, ducky, microcontroller, circuitpython, Happy Frog, Automation, Scripting, Educational, Ethical, Open Source, Free, GPLv3",
+    keywords="cybersecurity, education, hid, ducky, microcontroller, circuitpython, automation, scripting, educational, ethical, open source, free, gplv3, froggy basher, happy frog",
     project_urls={
         "Bug Reports": "https://github.com/ZeroDumb/happy-frog/issues",
         "Source": "https://github.com/ZeroDumb/happy-frog",
         "Documentation": "https://github.com/ZeroDumb/happy-frog/tree/main/docs",
+        "Homepage": "https://zerodumb.dev",
     },
+    license="GNU General Public License v3",
+    license_files=("LICENSE",),
 ) 

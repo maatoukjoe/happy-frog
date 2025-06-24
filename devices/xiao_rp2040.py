@@ -1,15 +1,11 @@
 """
-Happy Frog - Seeed Xiao RP2040 Template
-Educational HID Emulation Code
+Happy Frog - Xiao RP2040 Device Template
 
-This template provides the basic structure for running Happy Frog generated
-code on the Seeed Xiao RP2040 microcontroller using CircuitPython.
-
-Educational Purpose: This demonstrates how to set up HID emulation on
-affordable microcontrollers for cybersecurity education.
+This template provides a foundation for running Happy Frog Scripts
+on a Seeed Studio Xiao RP2040 microcontroller with CircuitPython.
 
 Hardware Requirements:
-- Seeed Xiao RP2040
+- Seeed Studio Xiao RP2040
 - USB-C cable for programming and power
 - CircuitPython firmware installed
 
@@ -25,15 +21,41 @@ License: GNU GPLv3
 """
 
 import time
-import usb_hid
-from adafruit_hid.keyboard import Keyboard
-from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
-from adafruit_hid.keycode import Keycode
 
-# Initialize HID devices
-# This creates a virtual keyboard that the computer recognizes
-keyboard = Keyboard(usb_hid.devices)
-keyboard_layout = KeyboardLayoutUS(keyboard)
+# Conditional imports for CircuitPython modules
+try:
+    import usb_hid
+    from adafruit_hid.keyboard import Keyboard
+    from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
+    from adafruit_hid.keycode import Keycode
+    
+    # Initialize HID devices
+    # This creates a virtual keyboard that the computer recognizes
+    keyboard = Keyboard(usb_hid.devices)
+    keyboard_layout = KeyboardLayoutUS(keyboard)
+    
+    CIRCUITPYTHON_AVAILABLE = True
+except ImportError:
+    # These modules are only available on CircuitPython devices
+    # When running on host systems, we provide mock implementations
+    CIRCUITPYTHON_AVAILABLE = False
+    
+    class MockKeyboard:
+        def press(self, key):
+            print(f"[MOCK] Pressed key: {key}")
+        
+        def release(self, key):
+            print(f"[MOCK] Released key: {key}")
+        
+        def release_all(self):
+            print("[MOCK] Released all keys")
+    
+    class MockKeyboardLayout:
+        def write(self, text):
+            print(f"[MOCK] Typed: {text}")
+    
+    keyboard = MockKeyboard()
+    keyboard_layout = MockKeyboardLayout()
 
 # Educational note: The usb_hid.devices list contains all available
 # HID devices. The Keyboard class uses the first available device

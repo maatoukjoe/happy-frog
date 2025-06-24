@@ -24,7 +24,12 @@ from .encoder import (
     EncoderError
 )
 
-__version__ = "1.0.0"
+try:
+    from ._version import __version__, __version_tuple__
+except ImportError:
+    __version__ = "0.1.0"
+    __version_tuple__ = (0, 1, 0)
+
 __author__ = "ZeroDumb"
 __license__ = "GNU GPLv3"
 
@@ -39,4 +44,8 @@ __all__ = [
     # Encoder classes
     "CircuitPythonEncoder",
     "EncoderError",
+    
+    # Version info
+    "__version__",
+    "__version_tuple__",
 ] 

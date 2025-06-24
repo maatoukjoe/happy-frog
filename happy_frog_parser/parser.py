@@ -78,6 +78,9 @@ class CommandType(Enum):
     VALIDATE = "VALIDATE"  # Validate environment before execution
     SAFE_MODE = "SAFE_MODE"  # Enable safe mode restrictions
     
+    # BadUSB compatibility commands
+    ATTACKMODE = "ATTACKMODE"  # BadUSB attack mode configuration
+    
     COMMENT = "COMMENT"
     REM = "REM"  # Alternative comment syntax
 
@@ -187,6 +190,9 @@ class HappyFrogParser:
             CommandType.LOG: re.compile(r'^LOG\s+(.+)$', re.IGNORECASE),  # LOG message
             CommandType.VALIDATE: re.compile(r'^VALIDATE\s+(.+)$', re.IGNORECASE),  # VALIDATE condition
             CommandType.SAFE_MODE: re.compile(r'^SAFE_MODE\s+(ON|OFF)$', re.IGNORECASE),  # SAFE_MODE ON/OFF
+            
+            # BadUSB compatibility commands
+            CommandType.ATTACKMODE: re.compile(r'^ATTACKMODE\s+(.+)$', re.IGNORECASE),  # ATTACKMODE configuration
             
             # Comments
             CommandType.COMMENT: re.compile(r'^#(.*)$', re.IGNORECASE),
@@ -343,6 +349,11 @@ class HappyFrogParser:
             
         elif command_type == CommandType.SAFE_MODE:
             # SAFE_MODE has ON/OFF parameter
+            parameters = [match.group(1)]
+            
+        # BadUSB compatibility commands
+        elif command_type == CommandType.ATTACKMODE:
+            # ATTACKMODE command captures the configuration
             parameters = [match.group(1)]
             
         # For all other commands, no parameters are extracted

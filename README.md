@@ -1,6 +1,6 @@
 # 🐸 Happy Frog
 
-**"One Small Step for HID. One Giant Leap for Keyboard Chaos."**
+**"One Small Step for HID. One Giant Leap for Keyboard Chaos."** (Now PIP available, see below for further instructions)
 
 Welcome to **Happy Frog** — your new favorite educational mayhem engine disguised as an HID emulation framework. You've heard of rubber duckies. You've seen people pretend to be keyboards. But have you ever watched a frog automate your operating system and ask *"Why are you like this?"* while doing it?
 
@@ -182,13 +182,37 @@ ENTER
 
 ##  Installation & Setup
 
-Grab a Xiao RP2040 or any of the other microcontrollers listed in our device support. Install CircuitPython. Clone this repo. Write your payload. Run the scripts. Don't overthink it.
+### Quick Start with Pip
+
+The easiest way to get started with Happy Frog is via pip:
 
 ```bash
+# Install the latest version from PyPI
+pip install happy-frog
+
+# Verify installation
+happy-frog --help
+```
+
+### Development Installation
+
+For developers and contributors:
+
+```bash
+# Clone the repository
 git clone https://github.com/ZeroDumb/happy-frog.git
 cd happy-frog
+
+# Install in development mode
+pip install -e .
+
+# Or install dependencies directly
 pip install -r requirements.txt
 ```
+
+### Hardware Setup
+
+Grab a Xiao RP2040 or any of the other microcontrollers listed in our device support. Install CircuitPython. Write your payload. Run the scripts. Don't overthink it.
 
 ##  Usage
 
@@ -198,22 +222,22 @@ The CLI is actually useful (shocking, we know):
 
 ```bash
 # Parse a Happy Frog Script file (see what the frog is thinking)
-python main.py parse payloads/hello_world.txt
+happy-frog parse payloads/hello_world.txt
 
 # Encode to CircuitPython (turn thoughts into reality)
-python main.py encode payloads/demo_automation.txt -o compiled/output.py
+happy-frog encode payloads/demo_automation.txt -o compiled/output.py
 
 # Convert Ducky Script to Happy Frog Script (migration magic)
-python main.py convert ducky_script.txt
+happy-frog convert ducky_script.txt
 
 # Validate a script (make sure it's not going to break everything)
-python main.py validate payloads/demo_automation.txt
+happy-frog validate payloads/demo_automation.txt
 
 # Verbose output (for when you want to see everything)
-python main.py encode payloads/demo_automation.txt -o compiled/output.py --verbose
+happy-frog encode payloads/demo_automation.txt -o compiled/output.py --verbose
 
 # Select specific device (because not all frogs are the same)
-python main.py encode payloads/demo_automation.txt --device xiao_rp2040 -o compiled/output.py
+happy-frog encode payloads/demo_automation.txt --device xiao_rp2040 -o compiled/output.py
 ```
 
 ### What Each Command Actually Does
@@ -222,6 +246,32 @@ python main.py encode payloads/demo_automation.txt --device xiao_rp2040 -o compi
 - **`encode`**: Converts your script into actual CircuitPython code that runs on hardware
 - **`validate`**: Checks if your script is safe and won't break things (mostly)
 - **`convert`**: Transforms old Ducky Script into modern Happy Frog Script
+
+### Python API
+
+For developers who want to integrate Happy Frog into their projects:
+
+```python
+from happy_frog_parser import HappyFrogParser, CircuitPythonEncoder
+from devices import DeviceManager
+from payloads import load_payload, list_payloads
+
+# Parse a script
+parser = HappyFrogParser()
+script = parser.parse_file("my_script.txt")
+
+# Generate device code
+encoder = CircuitPythonEncoder()
+code = encoder.encode(script, "output.py")
+
+# Use device-specific encoders
+device_manager = DeviceManager()
+code = device_manager.encode_script(script, "xiao_rp2040", "output.py")
+
+# Access built-in payloads
+print(list_payloads())
+payload_content = load_payload("hello_world.txt")
+```
 
 ##  Device Support
 
@@ -237,6 +287,47 @@ Happy Frog supports multiple microcontrollers because we're not picky about hard
 - **EvilCrow-Cable** - Specialized hardware (for the advanced users)
 
 Each device has its own encoder that generates optimized code. Because one size doesn't fit all in the microcontroller world.
+
+##  Use Cases & Why You'd Want This
+
+### For Educators & Students
+- **Cybersecurity Labs**: Teach HID emulation concepts safely
+- **Programming Education**: Learn automation and scripting
+- **Hardware Projects**: Understand microcontroller programming
+- **Security Awareness**: Demonstrate physical security risks
+
+### For Developers & Researchers
+- **Automation Testing**: Create automated input scenarios
+- **Security Research**: Study HID-based attack vectors
+- **Prototype Development**: Rapidly test automation ideas
+- **Integration Projects**: Build HID automation into larger systems
+
+### For System Administrators
+- **Automated Setup**: Script system configuration tasks
+- **Testing Procedures**: Validate security controls
+- **Documentation**: Create reproducible automation examples
+- **Training**: Demonstrate security concepts to teams
+
+### For Makers & Hobbyists
+- **DIY Projects**: Build custom automation devices
+- **Learning Electronics**: Understand microcontroller programming
+- **Creative Automation**: Build unique input devices
+- **Educational Demonstrations**: Show how automation works
+
+### Real-World Examples
+```bash
+# Educational: Create a simple automation demo
+happy-frog encode payloads/hello_world.txt --device xiao_rp2040
+
+# Research: Convert existing Ducky Scripts for analysis
+happy-frog convert legacy_ducky_script.txt
+
+# Development: Validate automation scripts before deployment
+happy-frog validate my_automation_script.txt
+
+# Testing: Generate device-specific code for different platforms
+happy-frog encode my_script.txt --device arduino_leonardo -o arduino_output.ino
+```
 
 ##  Documentation
 
@@ -266,12 +357,15 @@ Each device has its own encoder that generates optimized code. Because one size 
 
 - ✅ Script parsing and validation
 - ✅ CircuitPython code generation
-- ✅ Multi-device support
+- ✅ Multi-device support (7+ devices)
 - ✅ Ducky Script conversion
 - ✅ CLI with helpful error messages
 - ✅ Educational examples that actually work
 - ✅ Safety features and warnings
 - ✅ Comprehensive testing (because we're professionals)
+- ✅ Pip package distribution
+- ✅ Python API for integration
+- ✅ Device-specific optimizations
 
 ##  Known Issues
 
