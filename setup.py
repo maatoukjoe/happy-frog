@@ -14,7 +14,7 @@ def read_readme():
 
 setup(
     name="happy-frog",
-    version="0.1.6",
+    version="0.1.7",
     author="ZeroDumb",
     author_email="zero@zerodumb.dev",
     description="Educational HID emulation framework for cybersecurity learning",
@@ -65,10 +65,6 @@ setup(
         "Documentation": "https://github.com/ZeroDumb/happy-frog/tree/main/docs",
         "Homepage": "https://zerodumb.dev",
     },
-<<<<<<< HEAD
     license="GNU General Public License v3",
     license_files=("LICENSE",),
 ) 
-=======
-) 
->>>>>>> 479c5a86f36598c303d9731579b50ecb04bc7f5a

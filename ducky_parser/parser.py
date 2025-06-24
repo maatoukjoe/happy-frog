@@ -58,6 +58,9 @@ class CommandType(Enum):
     ALT = "ALT"
     MOD = "MOD"  # Modifier key (Windows/Command/Super)
     MODIFIER_COMBO = "MODIFIER_COMBO"  # For combos like MOD r
+    PAUSE = "PAUSE"  # Pause execution
+    SAFE_MODE = "SAFE_MODE"  # Enable/disable safe mode
+    ATTACKMODE = "ATTACKMODE"  # BadUSB attack mode
     COMMENT = "COMMENT"
     REM = "REM"  # Alternative comment syntax
 
@@ -147,6 +150,11 @@ class HappyFrogParser:
             CommandType.SHIFT: re.compile(r'^SHIFT$', re.IGNORECASE),
             CommandType.ALT: re.compile(r'^ALT$', re.IGNORECASE),
             CommandType.MOD: re.compile(r'^MOD$', re.IGNORECASE),  # Modifier key
+            
+            # Execution control
+            CommandType.PAUSE: re.compile(r'^PAUSE$', re.IGNORECASE),  # Pause execution
+            CommandType.SAFE_MODE: re.compile(r'^SAFE_MODE\s+(ON|OFF)$', re.IGNORECASE),  # SAFE_MODE ON/OFF
+            CommandType.ATTACKMODE: re.compile(r'^ATTACKMODE\s+(HID|STORAGE|HID\s+STORAGE|ON|OFF)$', re.IGNORECASE),  # ATTACKMODE with parameters
             
             # Comments
             CommandType.COMMENT: re.compile(r'^#(.*)$', re.IGNORECASE),
@@ -273,6 +281,14 @@ class HappyFrogParser:
             
         elif command_type == CommandType.COMMENT:
             # COMMENT command captures everything after #
+            parameters = [match.group(1)]
+            
+        elif command_type == CommandType.SAFE_MODE:
+            # SAFE_MODE command captures ON/OFF parameter
+            parameters = [match.group(1)]
+            
+        elif command_type == CommandType.ATTACKMODE:
+            # ATTACKMODE command captures the mode parameter
             parameters = [match.group(1)]
             
         # For all other commands, no parameters are extracted

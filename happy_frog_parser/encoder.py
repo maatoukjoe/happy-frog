@@ -78,6 +78,11 @@ class CircuitPythonEncoder:
             CommandType.PAUSE: "PAUSE",  # Special handling for PAUSE command
         }
         
+        # State for advanced features (set before templates)
+        self.default_delay = 0  # Default delay between commands
+        self.last_command = None  # For REPEAT functionality
+        self.safe_mode = True  # Safe mode enabled by default
+        
         # CircuitPython code templates
         self.templates = {
             'header': self._get_header_template(),
@@ -91,11 +96,6 @@ class CircuitPythonEncoder:
             'loop': self._get_loop_template(),
             'log': self._get_log_template(),
         }
-        
-        # State for advanced features
-        self.default_delay = 0  # Default delay between commands
-        self.last_command = None  # For REPEAT functionality
-        self.safe_mode = True  # Safe mode enabled by default
     
     def encode(self, script: HappyFrogScript, output_file: Optional[str] = None) -> str:
         """
